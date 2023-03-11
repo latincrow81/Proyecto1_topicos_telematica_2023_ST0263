@@ -1,0 +1,31 @@
+version: '3.6'
+
+services:
+  api_gateway:
+    build:
+      dockerfile: api_gateway/Dockerfile
+    command:
+      - ./docker-entrypoint.sh
+    networks:
+      - default
+    ports:
+      - "5000:5000"
+  micro_service_grpc:
+    image: grpc/go
+    restart: always
+    ports:
+      - "8100:8100"
+  micro_service_rmq:
+    image: golang
+    restart: always
+    ports:
+      - "8200:8200"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq

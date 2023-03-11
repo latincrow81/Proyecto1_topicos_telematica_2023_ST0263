@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Unified Availability Service ${stage}
+  version: '1.0'
+servers:
+  - url: http://localhost:{port}
+    description: Local development server
+    variables:
+      port:
+        default: '5010'
+  - url: https://unified-availability-service.api.qa.patientpop.com
+    description: QA server
+  - url: https://unified-availability-service.api.stg.patientpop.com
+    description: Staging server
+  - url: https://unified-availability-service.api.patientpop.com
+    description: Production server
+paths:
+  /file_list:
+    get:
+      summary: Get file list
+      parameters: [ ]
+      responses:
+        '200':
+          description: Files available on server
+          content:
+            application/json: { }
+      description: Files available on server
+      operationId: get_file_list
+      x-openapi-router-controller: app.controllers
+      tags:
+        - file_list
+  /find/{wildcard}:
+    post:
+      summary: Find if file is in list
+      parameters:
+        - schema:
+            type: string
+          name: wildcard
+          in: path
+          required: true
+      responses:
+        '200':
+          description: File Available
+          content:
+            application/json: { }
+        '404':
+          description: File not found
+          content:
+            application/json: { }
+      description: find file in server
+      operationId: find_file
+      x-openapi-router-controller: app.controllers
+      tags:
+        - find_file
