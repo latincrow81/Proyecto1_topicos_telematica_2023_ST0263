@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+// Solicitud de la lista de archivos (no pide ningun request)
+message SendMessageRequest {
+}
+
+message Message{
+    string payload = 1;
+}
+
+// Definición del servicio para la lista de archivos y la búsqueda 
+service Messages {
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse) {}
+}
+
+  
+
