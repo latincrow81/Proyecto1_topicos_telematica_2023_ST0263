@@ -9,9 +9,12 @@ message Message{
     string payload = 1;
 }
 
+message SendMessageResponse{
+}
+
 // Definición del servicio para la lista de archivos y la búsqueda 
 service Messages {
-  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse) {}
+  rpc GetSendMessage (SendMessageRequest) returns (SendMessageResponse) {}
 }
 
   
