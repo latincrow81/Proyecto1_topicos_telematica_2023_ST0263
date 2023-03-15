@@ -19,6 +19,8 @@ def create_app(environment='development'):
     from .auth.models import User, AnonymousUser
 
     # Instantiate app.
+
+
     app = connexion.FlaskApp(__name__)
     app.add_api('../openapi.yml')
 
