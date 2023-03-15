@@ -6,8 +6,8 @@ import os
 #from dotenv import load_dotenv
 #load_dotenv()
 
-SERVER_ADDRESS = os.getenv("HOST_GRPC")
-SERVER_PORT = os.getenv("PORT_GRPC")
+SERVER_ADDRESS = os.getenv("HOST_MOM")
+SERVER_PORT = os.getenv("PORT_MOM")
 
 def list_files():
     with grpc.insecure_channel(f'{SERVER_ADDRESS}:{SERVER_PORT}') as channel:
