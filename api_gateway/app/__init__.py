@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.exceptions import HTTPException
 
+from api_gateway.app.services import serve
+
 # instantiate extensions
 login_manager = LoginManager()
 db = SQLAlchemy()
@@ -23,5 +25,5 @@ def create_app(environment='development'):
 
     app = connexion.FlaskApp(__name__)
     app.add_api('../openapi.yml')
-
+    serve()
     return app
