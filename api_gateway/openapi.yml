@@ -15,13 +15,22 @@ servers:
   - url: https://unified-availability-service.api.patientpop.com
     description: Production server
 paths:
-  /file_list:
+  /read_from_queue/{queue_name}:
     get:
-      summary: Get file list
-      parameters: [ ]
+      summary: read from queue
+      parameters:
+        - schema:
+            type: string
+          name: queue_name
+          in: path
+          required: true
       responses:
         '200':
-          description: Files available on server
+          description: message from queue
+          content:
+            application/json: { }
+        '404':
+          description: queue not found
           content:
             application/json: { }
       description: Files available on server
@@ -29,26 +38,39 @@ paths:
       x-openapi-router-controller: app.controllers
       tags:
         - file_list
-  /find/{wildcard}:
+  /post_to_queue/{queue_name}:
     post:
-      summary: Find if file is in list
-      parameters:
-        - schema:
-            type: string
-          name: wildcard
-          in: path
-          required: true
+      summary: post message to queue
+      parameters: []
       responses:
         '200':
-          description: File Available
+          description: Message post to queue
           content:
             application/json: { }
-        '404':
-          description: File not found
+        '424':
+          description: Failed dependency MOM
           content:
             application/json: { }
       description: find file in server
-      operationId: find_file
+      operationId: post_to_queue
       x-openapi-router-controller: app.controllers
       tags:
-        - find_file
+        - post_to_queue
+  /create_to_queue/{queue_name}:
+    post:
+      summary: Create queue with name on mom
+      parameters: []
+      responses:
+        '200':
+          description: Queue created
+          content:
+            application/json: { }
+        '424':
+          description: Failed dependency MOM
+          content:
+            application/json: { }
+      description: create-queue
+      operationId: create_queue
+      x-openapi-router-controller: app.controllers
+      tags:
+        - create_queue
