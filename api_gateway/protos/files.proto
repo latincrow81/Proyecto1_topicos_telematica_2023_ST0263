@@ -6,7 +6,9 @@ message SendMessageRequest {
 }
 
 message Message{
-    string payload = 1;
+    string queue_name = 1;
+    string payload = 2;
+    string op = 3;
 }
 
 message SendMessageResponse{
