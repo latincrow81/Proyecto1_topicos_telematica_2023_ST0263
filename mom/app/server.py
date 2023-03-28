@@ -12,7 +12,7 @@ load_dotenv()
 ROOT_PATH = os.getenv("ROOT_PATH")
 PORT = os.getenv("PORT")
 
-
+#Recibe el mensaje
 class MessageService(files_pb2_grpc.FilesServicer):
 
     def GetFilesList(self, request, context):

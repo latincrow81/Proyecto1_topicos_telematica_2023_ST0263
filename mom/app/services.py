@@ -1,8 +1,6 @@
 import os
 from concurrent import futures
-
 import grpc
-
 from api_gateway.protos.generated import files_pb2_grpc, files_pb2
 
 SERVER_ADDRESS = os.getenv("HOST_MOM")
@@ -11,8 +9,10 @@ GRPC_PORT = os.getenv("PORT_MOM")
 
 class ListFilesServicer(files_pb2_grpc.MessagesServicer):
 
+# Abre conexión
     def handle_grpc_request_from_gateway(self, request, context):
-        with grpc.insecure_channel(f'{SERVER_ADDRESS}:{GRPC_PORT}') as channel:
+        with grpc.insecure_channel(f'{SERVER_ADDRESS}:{GRPC_PORT}') as channel: 
+            
             # todo: crear cola en memoria
 
             return request

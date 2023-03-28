@@ -12,7 +12,7 @@ grpc_port = os.getenv("PORT_GRPC")
 rmq_user = os.getenv('USER')
 rmq_password = os.getenv('PASSWORD')
 
-
+#Manda mensaje para que la cola se crea
 def create_queue(request: requests):
     # TODO: abrir conexion grpc enviar mensaje que incluya nombre de cola la respuesta debe ser un mensaje "cola creada <nombre>"
     nombre = request["queue_name"]
@@ -24,6 +24,7 @@ def create_queue(request: requests):
         # Se retorna el resultado de la creacion
     return Response(status=200, response=f"cola creada {nombre}")
 
+#Manda un request de Grpc para meter un mesnaje en la cola
 def post_to_queue():
     # TODO: enviar mensaje con grpc igual que create queue  - mensaje = {}
     with grpc.insecure_channel(f'{host_grpc}:{grpc_port}') as channel:
@@ -34,6 +35,7 @@ def post_to_queue():
         # Se retorna el resultado de la creacion
     return Response(status=200, response={"exito": "Mensaje enviado a la cola"})
 
+#(POP) Lee el ultimo mensaje de la cola 
 def read_from_queue():
     # TODO: leer mensaje de cola con grpc
     # TODO: response es el mensaje que retorne la cola
