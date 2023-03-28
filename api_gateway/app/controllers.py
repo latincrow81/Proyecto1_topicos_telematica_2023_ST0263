@@ -1,8 +1,6 @@
-import json
 import os
 import grpc
-import requests
-from flask import Response
+from flask import Response, request
 from api_gateway.app.services import send_message
 from api_gateway.protos.generated import files_pb2_grpc, files_pb2
 
@@ -11,35 +9,33 @@ grpc_port = os.getenv("PORT_GRPC")
 rmq_user = os.getenv('USER')
 rmq_password = os.getenv('PASSWORD')
 
-#Manda mensaje para que la cola se crea
-def create_queue(request):
+#Manda mensaje para que la cola se cree
 
-    queue_name = request.get('queue_name')
-    response_message = send_message(queue_name)
-    response_data = {'queue_name':queue_name, 'op':'create'}
+def create_queue():
+    request_data = request.json
+    queue_name = request_data.get('queue_name')
+    queue_message = {'queue_name': queue_name, 'op':'create'}
+    response_message = send_message(queue_message)
 
-    return Response(status=200, response=f"Cola creada {response_message}", data=response_data)
+    return Response(status=200, response=f"Cola creada {response_message}")
 
 
 #Manda un request de Grpc para meter un mesnaje en la cola
 def post_to_queue():
-    # TODO: enviar mensaje con grpc igual que create queue  - mensaje = {'op': 'create|post|get'}
-    with grpc.insecure_channel(f'{host_grpc}:{grpc_port}') as channel:
-        # Cliente para el servicio de Messages
-        list_files_client = files_pb2_grpc.MessagesStub(channel)
-        # Se llama al servicio de send message
-        list_files_client.GetSendMessage(files_pb2.SendMessageRequest())
-        # Se retorna el resultado de la creacion
-    return Response(status=200, response={"exito": "Mensaje enviado a la cola"})
+    request_data = request.json
+    queue_name = request_data.get('queue_name')
+    payload = request_data.get('payload')
+    queue_message = {'queue_name': queue_name, 'op': 'post', 'payload': payload}
+    send_message(queue_message)
+
+    return Response(status=200, response=f"Mensaje enviado a cola {queue_name}")
+
 
 #(POP) Lee el ultimo mensaje de la cola 
 def read_from_queue():
-    # TODO: leer mensaje de cola con grpc
-    # TODO: response es el mensaje que retorne la cola
-    with grpc.insecure_channel(f'{host_grpc}:{grpc_port}') as channel:
-        # Cliente para el servicio de Messages
-        list_files_client = files_pb2_grpc.MessagesStub(channel)
-        # Se llama al servicio de send message
-        message = list_files_client.GetSendMessage(files_pb2.SendMessageRequest())
-        # Se retorna el resultado de la creacion
-    return Response(status=200, response=message)
+    request_data = request.json
+    queue_name = request_data.get('queue_name')
+    queue_message = {'queue_name': queue_name, 'op': 'get'}
+    response_message = send_message(queue_message)
+
+    return Response(status=200, response=response_message)

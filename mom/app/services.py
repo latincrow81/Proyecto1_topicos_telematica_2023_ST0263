@@ -7,6 +7,7 @@ from typing import Optional, Dict
 
 import grpc
 from api_gateway.protos.generated import files_pb2_grpc, files_pb2
+from mom.app.controllers import create_queue
 
 SERVER_ADDRESS = os.getenv("HOST_MOM")
 GRPC_PORT = os.getenv("PORT_MOM")
@@ -18,15 +19,15 @@ class ListFilesServicer(files_pb2_grpc.MessagesServicer):
     def handle_grpc_request_from_gateway(self, request, context):
 
         with grpc.insecure_channel(f'{SERVER_ADDRESS}:{GRPC_PORT}') as channel: 
-            
-            # todo: crear cola en memoria
+
             message = self.handle_request(request)
             return message
 
     @staticmethod
     def handle_request(request) -> Optional[Dict]:
         if request['op'] is Ops.CREATE:
-            pass
+            queue_name = request.get('queue_name')
+            create_queue(queue_name)
         elif request['op'] is Ops.POST:
             pass
         elif request['op'] is Ops.GET:
