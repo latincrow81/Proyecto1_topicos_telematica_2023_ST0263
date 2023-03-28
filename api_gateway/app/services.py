@@ -9,11 +9,13 @@ SERVER_ADDRESS = os.getenv("HOST_MOM")
 SERVER_PORT = os.getenv("PORT_MOM")
 
 
-def send_grpc_request_to_mom(message: dict):
-    with grpc.insecure_channel(f'{SERVER_ADDRESS}:{SERVER_PORT}') as channel:
-        for message in files_pb2_grpc.MessagesStub(channel).GetSendMessage(files_pb2.SendMessageRequest()).messages:
-            pass
+def send_message(queue_name):
+    with grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
 
+        stub = files_pb2_grpc.MessagesStub(channel)
+        response = stub.CreateQueue(files_pb2.QueueMessage(queue_name=queue_name))
+
+    return response.message
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

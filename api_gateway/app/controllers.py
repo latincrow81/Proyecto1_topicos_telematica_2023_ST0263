@@ -3,6 +3,7 @@ import os
 import grpc
 import requests
 from flask import Response
+from api_gateway.app.services import send_message
 from api_gateway.protos.generated import files_pb2_grpc, files_pb2
 
 host_grpc = os.getenv("HOST_GRPC")
@@ -21,13 +22,6 @@ def create_queue(request):
 
     return Response(status=200, response=f"Cola creada {response_message}", data=response_data)
 
-def send_message(queue_name):
-    with grpc.insecure_channel(f"{host_grpc}:{grpc_port}") as channel:
-
-        stub = files_pb2_grpc.MessagesStub(channel)
-        response = stub.CreateQueue(files_pb2.QueueMessage(queue_name=queue_name))
-
-    return response.message
 
 #Manda un request de Grpc para meter un mesnaje en la cola
 def post_to_queue():
