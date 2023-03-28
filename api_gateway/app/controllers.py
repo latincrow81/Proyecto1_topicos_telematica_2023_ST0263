@@ -13,8 +13,6 @@ rmq_password = os.getenv('PASSWORD')
 
 #Manda mensaje para que la cola se crea
 def create_queue(request):
-    # TODO: abrir conexion grpc enviar mensaje que incluya nombre de cola la respuesta debe ser un mensaje "cola creada <nombre>"
-    # todo: enviar un diccionario con "queue_name" y "op": "create"
 
     queue_name = request.get('queue_name')
     response_message = send_message(queue_name)

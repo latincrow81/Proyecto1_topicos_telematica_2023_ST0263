@@ -41,7 +41,12 @@ paths:
   /post_to_queue/{queue_name}:
     post:
       summary: post message to queue
-      parameters: []
+      parameters: 
+        - schema:
+            type: string
+          name: payload
+          in: body
+          required: true
       responses:
         '200':
           description: Message post to queue
