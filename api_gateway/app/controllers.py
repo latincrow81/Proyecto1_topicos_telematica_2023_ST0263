@@ -11,16 +11,23 @@ rmq_user = os.getenv('USER')
 rmq_password = os.getenv('PASSWORD')
 
 #Manda mensaje para que la cola se crea
-def create_queue(request: requests):
-    nombre = request["queue_name"]
+def create_queue(request):
     # TODO: abrir conexion grpc enviar mensaje que incluya nombre de cola la respuesta debe ser un mensaje "cola creada <nombre>"
     # todo: enviar un diccionario con "queue_name" y "op": "create"
-    with grpc.insecure_channel(f"{host_grpc}:{grpc_port}") as channel:
-        message = files_pb2.Message(queue_name=nombre, op="create")
-        stub = files_pb2_grpc.QueueServiceStub(channel)
-        response = stub.CreateQueue(files_pb2.QueueRequest(queue_name=nombre))
 
-    return response(status=200, response=f"cola creada {nombre}")
+    queue_name = request.get('queue_name')
+    response_message = send_message(queue_name)
+    response_data = {'queue_name':queue_name, 'op':'create'}
+
+    return Response(status=200, response=f"Cola creada {response_message}", data=response_data)
+
+def send_message(queue_name):
+    with grpc.insecure_channel(f"{host_grpc}:{grpc_port}") as channel:
+
+        stub = files_pb2_grpc.MessagesStub(channel)
+        response = stub.CreateQueue(files_pb2.QueueMessage(queue_name=queue_name))
+
+    return response.message
 
 #Manda un request de Grpc para meter un mesnaje en la cola
 def post_to_queue():
