@@ -1,5 +1,7 @@
 import os
 from concurrent import futures
+from enum import Enum
+from typing import Optional, Dict
 
 import grpc
 
@@ -13,9 +15,21 @@ class ListFilesServicer(files_pb2_grpc.MessagesServicer):
 
     def handle_grpc_request_from_gateway(self, request, context):
         with grpc.insecure_channel(f'{SERVER_ADDRESS}:{GRPC_PORT}') as channel:
-            # todo: crear cola en memoria
 
-            return request
+            message = self.handle_request(request)
+            return message
+
+    @staticmethod
+    def handle_request(request) -> Optional[Dict]:
+        if request['op'] is Ops.CREATE:
+            pass
+        elif request['op'] is Ops.POST:
+            pass
+        elif request['op'] is Ops.GET:
+            pass
+        else:
+            pass
+
 
 
 
@@ -28,3 +42,7 @@ def serve():
     print(f'Servidor en ejecución en el puerto {GRPC_PORT}...')
     server.wait_for_termination()
 
+class Ops(Enum):
+    CREATE = 'create'
+    POST = 'post'
+    GET = 'get'
