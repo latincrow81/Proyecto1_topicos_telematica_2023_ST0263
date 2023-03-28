@@ -13,7 +13,7 @@ ROOT_PATH = os.getenv("ROOT_PATH")
 PORT = os.getenv("PORT")
 
 
-class ListFilesServicer(files_pb2_grpc.FilesServicer):
+class MessageService(files_pb2_grpc.FilesServicer):
 
     def GetFilesList(self, request, context):
         print(f"Request: {request}")

@@ -10,3 +10,12 @@ services:
       - default
     ports:
       - "5000:5000"
+  mom:
+    build:
+      dockerfile: mom/Dockerfile
+    command:
+      - ./docker-entrypoint.sh
+    networks:
+      - default
+    ports:
+      - "6000:6000"
