@@ -14,7 +14,10 @@ class ListFilesServicer(files_pb2_grpc.MessagesServicer):
     def handle_grpc_request_from_gateway(self, request, context):
         with grpc.insecure_channel(f'{SERVER_ADDRESS}:{GRPC_PORT}') as channel:
             # todo: crear cola en memoria
-            return "cola creada en el servidor"
+
+            return request
+
+
 
 
 def serve():
