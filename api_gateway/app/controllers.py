@@ -1,10 +1,8 @@
 import json
 import os
-
 import grpc
 import requests
 from flask import Response
-
 from api_gateway.protos.generated import files_pb2_grpc, files_pb2
 
 host_grpc = os.getenv("HOST_GRPC")
