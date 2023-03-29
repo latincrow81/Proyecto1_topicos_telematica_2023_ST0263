@@ -1,19 +1,13 @@
 openapi: 3.0.3
 info:
-  title: Unified Availability Service ${stage}
+  title: Gateway Proyecto 1 - MOM
   version: '1.0'
 servers:
   - url: http://localhost:{port}
-    description: Local development server
+    description: Gateway Local
     variables:
       port:
-        default: '5010'
-  - url: https://unified-availability-service.api.qa.patientpop.com
-    description: QA server
-  - url: https://unified-availability-service.api.stg.patientpop.com
-    description: Staging server
-  - url: https://unified-availability-service.api.patientpop.com
-    description: Production server
+        default: '8000'
 paths:
   /read_from_queue/{queue_name}:
     get:
@@ -44,14 +38,21 @@ paths:
       parameters: 
         - schema:
             type: string
-          name: payload
-          in: body
+          name: queue_name
+          in: path
           required: true
+      requestBody:
+        description: payload for queue
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payload'
       responses:
         '200':
           description: Message post to queue
           content:
-            application/json: { }
+            application/json: {}
         '424':
           description: Failed dependency MOM
           content:
@@ -79,3 +80,17 @@ paths:
       x-openapi-router-controller: app.controllers
       tags:
         - create_queue
+components:
+  schemas:
+    Payload:
+      additionalProperties: false
+      type: object
+      x-examples:
+        ExamplePayload:
+          data: "something"
+      properties:
+        data:
+          type: string
+      required:
+        - data
+      description: Payload to send to queue.
