@@ -8,7 +8,7 @@ rmq_password = os.getenv('PASSWORD')
 
 
 def create_queue(queue_name):
-    shm = multiprocessing.shared_memory.SharedMemory(create=True, size=10) #coreggir para quue el size sea variable
+    shm = multiprocessing.shared_memory.SharedMemory(create=True, size=2048) 
     lista_queue_stack = shm.buf
     lista_queue_stack[0] = 0 
     return shm.name
