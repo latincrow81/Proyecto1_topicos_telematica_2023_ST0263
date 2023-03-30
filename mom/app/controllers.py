@@ -18,9 +18,7 @@ def push_message_to_queue(queue_name, payload):
     return shared_memory_list
 
 def pop_message_from_queue(queue_name):
-    shared_memory_message = SharedMemory(name=queue_name)
-    lista_queue_stack = shared_memory_message.buf
-    response = lista_queue_stack[lista_queue_stack[0]]
-    lista_queue_stack[0] -= 1
-    shared_memory_message.close()
-    return response
+    temp_list = ShareableList(name=queue_name)
+    response = temp_list.pop()    
+    shared_memory_list = ShareableList(sequence=temp_list, name=queue_name)
+    return response, shared_memory_list
