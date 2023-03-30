@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import files_pb2 as files__pb2
+import app.protos.generated.files_pb2 as files__pb2
 
 
 class MessagesStub(object):

@@ -1,8 +1,6 @@
 import os
-import grpc
 from flask import Response, request
-from api_gateway.app.services import send_message
-from api_gateway.protos.generated import files_pb2_grpc, files_pb2
+from .services import send_message
 
 host_grpc = os.getenv("HOST_GRPC")
 grpc_port = os.getenv("PORT_GRPC")

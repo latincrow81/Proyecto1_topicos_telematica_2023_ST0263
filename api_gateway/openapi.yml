@@ -57,7 +57,7 @@ paths:
           description: Failed dependency MOM
           content:
             application/json: { }
-      description: find file in server
+      description: post message to queue
       operationId: post_to_queue
       x-openapi-router-controller: app.controllers
       tags:

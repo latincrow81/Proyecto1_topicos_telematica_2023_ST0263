@@ -1,29 +1,23 @@
 import os
 
-import connexion
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from werkzeug.exceptions import HTTPException
+from flask import Flask
 
-from mom.app.services import serve
-
-# instantiate extensions
-login_manager = LoginManager()
-db = SQLAlchemy()
+from app.services import serve
 
 
 def create_app(environment='development'):
 
     from .config import config
     from .views import main_blueprint
-    from .auth.views import auth_blueprint
-    from .auth.models import User, AnonymousUser
 
     # Instantiate app.
+    app = Flask(__name__)
 
+    env = os.environ.get('FLASK_ENV', environment)
+    app.config.from_object(config[env])
+    config[env].configure(app)
 
-    app = connexion.FlaskApp(__name__)
-    app.add_api('../openapi.yml')
+    # start grpc server
     serve()
+
     return app
