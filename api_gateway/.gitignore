@@ -1,5 +1,4 @@
 __pycache__/
 *.pyc
-.env
 database-*.sqlite3
 api_gateway/apigtw/
