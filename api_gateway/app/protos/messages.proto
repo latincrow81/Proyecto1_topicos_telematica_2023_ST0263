@@ -1,10 +1,5 @@
 syntax = "proto3";
 
-
-// Solicitud de la lista de archivos (no pide ningun request)
-message SendMessageRequest {
-}
-
 message Message{
     string queue_name = 1;
     string payload = 2;
@@ -12,11 +7,12 @@ message Message{
 }
 
 message SendMessageResponse{
+    string result = 1;
 }
 
 // Definición del servicio para la lista de archivos y la búsqueda 
 service Messages {
-  rpc GetSendMessage (SendMessageRequest) returns (SendMessageResponse) {}
+  rpc GetSendMessage (Message) returns (SendMessageResponse) {}
 }
 
   

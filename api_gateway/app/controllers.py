@@ -1,18 +1,12 @@
 import json
-import os
 from flask import Response, request
 from .services import send_message
-
-host_grpc = os.getenv("HOST_GRPC")
-grpc_port = os.getenv("PORT_GRPC")
-rmq_user = os.getenv('USER')
-rmq_password = os.getenv('PASSWORD')
 
 #Manda mensaje para que la cola se cree
 
 
 def create_queue(queue_name: str) -> Response:
-    queue_message = json.dumps({'queue_name': queue_name, 'op': 'create'})
+    queue_message = json.dumps({'queue_name': queue_name, 'op': 'create', 'payload': ''})
     grpc_response = send_message(queue_message)
     return Response(status=200, response=f"Cola creada {grpc_response}")
 
