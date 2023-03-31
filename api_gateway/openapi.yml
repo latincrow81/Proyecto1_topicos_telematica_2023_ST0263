@@ -62,10 +62,15 @@ paths:
       x-openapi-router-controller: app.controllers
       tags:
         - post_to_queue
-  /create_to_queue/{queue_name}:
+  /create_queue/{queue_name}:
     post:
       summary: Create queue with name on mom
-      parameters: []
+      parameters:
+        - schema:
+            type: string
+          name: queue_name
+          in: path
+          required: true
       responses:
         '200':
           description: Queue created
