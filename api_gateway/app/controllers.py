@@ -1,13 +1,15 @@
 import json
 from flask import Response, request
+
+from .protos import messages_pb2
 from .services import send_message
 
 #Manda mensaje para que la cola se cree
 
 
 def create_queue(queue_name: str) -> Response:
-    queue_message = json.dumps({'queue_name': queue_name, 'op': 'create', 'payload': ''})
-    grpc_response = send_message(queue_message)
+    message = messages_pb2.Message(queue_name=queue_name, op='create', payload='')
+    grpc_response = send_message(message)
     return Response(status=200, response=f"Cola creada {grpc_response}")
 
 
