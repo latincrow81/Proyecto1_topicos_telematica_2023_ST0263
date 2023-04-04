@@ -1,29 +1,54 @@
-# ST0263 Topicos Especiales En Telematica
+# ST0263 Tópicos Especiales en Telematica
+
+# Estudiantes: 
+- Mauricio Escudero, 
+- Jose Alejandro Sánchez Sánchez, jasanchez@eafit.edu.co
+- Edison Alejandro Torres Muñoz, eatorresm@eafit.edu.co
 #
-## Estudiante(s): Mauricio Escudero Restrepo , mescude1@eafit.edu.co
+# Profesor: Edwin Nelson Montoya Munera, emontoya@eafit.edu.co
+
+# Proyecto 1
 #
-## Profesor: Edwin Nelson Montoya Munera, emontoya@eafit.edu.co
+# 1. Breve descripción de la actividad
+Diseñar e implementar un middleware orientado a mensajes (MOM) que permita a un conjunto de CLIENTES enviar y recibir mensajes de datos.
 #
-### Reto No 2. Procesos comunicantes por API REST, RPC y MOM
-#
- Diseño e implementación de 2 microservicios básicos que ofrecen ambos un servicio al API Gateway y que se deben 
- comunicar por un middleware RPC y por un middleware MOM.
-#
+# 1.1. Que aspectos cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
-#### Como ejecutar
+# 1.2. Que aspectos NO cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
-Este proyecto requiere Docker para funcionar.
+# 2. Información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
+![Arquitectura](./assets/Arquitectura.jpeg)
 
-<code>docker-compose up</code>
+El cliente se conecta a traves de internet y hace peticiones a una API atraves de HTTP, ésta de igual manera acompaña a la conexión entre el Flask(ApiGateway) y la memoria compartida. La comunicación gRPC y MOM funciona a traves de 'colas'.
 
-El Api Gateway funciona en el puerto 5000 y provee una interfaz tipo swagger en localhost:5000/ui
+# 3. Descripción del ambiente de desarrollo y técnico: lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
+## como se compila y ejecuta.
+## detalles del desarrollo.
+## detalles técnicos
+## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
+## opcional - detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
+## 
+## opcionalmente - si quiere mostrar resultados o pantallazos 
 
-#### referencias
-* https://x-team.com/blog/set-up-rabbitmq-with-docker-compose/
-* https://blog.logrocket.com/creating-a-web-server-with-golang/
-* https://github.com/sahansera/go-grpc
-* https://github.com/lakhinsu/rabbitmq-go-example
-* https://medium.com/@rahulsamant_2674/python-rabbitmq-8c1c3b79ab3d
+# 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
-##### versión README.md -> 1.0 (2023-Marzo)
+# IP o nombres de dominio en nube o en la máquina servidor.
+
+## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
+
+## como se lanza el servidor.
+
+## una mini guia de como un usuario utilizaría el software o la aplicación
+
+## opcionalmente - si quiere mostrar resultados o pantallazos 
+
+# 5. otra información que considere relevante para esta actividad.
+
+# referencias:
+<debemos siempre reconocer los créditos de partes del código que reutilizaremos, así como referencias a youtube, o referencias bibliográficas utilizadas para desarrollar el proyecto o la actividad>
+## sitio1-url 
+## sitio2-url
+## url de donde tomo info para desarrollar este proyecto
+
+#### versión README.md -> 1.0 (2022-agosto)
