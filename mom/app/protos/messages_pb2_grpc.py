@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import app.protos.generated.files_pb2 as files__pb2
+import messages_pb2 as messages__pb2
 
 
 class MessagesStub(object):
@@ -17,8 +17,8 @@ class MessagesStub(object):
         """
         self.GetSendMessage = channel.unary_unary(
                 '/Messages/GetSendMessage',
-                request_serializer=files__pb2.SendMessageRequest.SerializeToString,
-                response_deserializer=files__pb2.SendMessageResponse.FromString,
+                request_serializer=messages__pb2.Message.SerializeToString,
+                response_deserializer=messages__pb2.SendMessageResponse.FromString,
                 )
 
 
@@ -37,8 +37,8 @@ def add_MessagesServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetSendMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.GetSendMessage,
-                    request_deserializer=files__pb2.SendMessageRequest.FromString,
-                    response_serializer=files__pb2.SendMessageResponse.SerializeToString,
+                    request_deserializer=messages__pb2.Message.FromString,
+                    response_serializer=messages__pb2.SendMessageResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -63,7 +63,7 @@ class Messages(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Messages/GetSendMessage',
-            files__pb2.SendMessageRequest.SerializeToString,
-            files__pb2.SendMessageResponse.FromString,
+            messages__pb2.Message.SerializeToString,
+            messages__pb2.SendMessageResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

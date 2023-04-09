@@ -3,14 +3,15 @@ import grpc
 from concurrent import futures
 from enum import Enum
 from typing import Optional, Dict
-from app.protos.generated import files_pb2_grpc
-from app.controllers import create_queue
+
+from controllers import create_queue
+from protos import messages_pb2_grpc
 
 SERVER_ADDRESS = os.getenv("HOST_MOM")
 GRPC_PORT = os.getenv("PORT_MOM")
 
 
-class ListFilesServicer(files_pb2_grpc.MessagesServicer):
+class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
 
     # Abre conexión
     def handle_grpc_request_from_gateway(self, request, context):
@@ -35,7 +36,7 @@ class ListFilesServicer(files_pb2_grpc.MessagesServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    files_pb2_grpc.add_MessagesServicer_to_server(files_pb2_grpc.MessagesServicer(), server)
+    messages_pb2_grpc.add_MessagesServicer_to_server(messages_pb2_grpc.MessagesServicer(), server)
     server.add_insecure_port('localhost:50051')
     server.start()
     print(f'Servidor en ejecución en el puerto {GRPC_PORT}...')
