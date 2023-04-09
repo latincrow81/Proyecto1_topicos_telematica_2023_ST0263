@@ -3,18 +3,18 @@ import os
 import grpc
 
 
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 from app.protos import messages_pb2_grpc, messages_pb2
 
-load_dotenv()
+config = dotenv_values("../.env")
 
-HOST_GRPC = os.getenv('HOST_GRPC')
-PORT_GRPC = os.getenv('PORT_GRPC')
+HOST_GRPC = config.get('HOST_GRPC')
+PORT_GRPC = config.get('PORT_GRPC')
 
 
 def send_message(message: messages_pb2.Message) -> str:
-    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+    with grpc.insecure_channel(f"mom:50051") as channel:
         stub = messages_pb2_grpc.MessagesStub(channel)
         response = stub.GetSendMessage(message)
 
