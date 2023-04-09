@@ -1,7 +1,7 @@
 import connexion
 
 
-def create_app(environment='development'):
+def create_app():
 
     from .config import config
 

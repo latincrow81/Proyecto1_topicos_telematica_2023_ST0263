@@ -6,9 +6,12 @@ from typing import Optional, Dict
 
 from app.controllers import create_queue
 from app.protos import messages_pb2_grpc
+from dotenv import load_dotenv
 
-SERVER_ADDRESS = os.getenv("HOST_MOM")
-GRPC_PORT = os.getenv("PORT_MOM")
+load_dotenv()
+
+SERVER_ADDRESS = os.getenv('HOST_MOM')
+GRPC_PORT = os.getenv('PORT_MOM')
 
 
 class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
@@ -16,7 +19,7 @@ class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
     # Abre conexión
     def handle_grpc_request_from_gateway(self, request, context):
 
-        with grpc.insecure_channel("localhost:50051") as channel:
+        with grpc.insecure_channel(f"{SERVER_ADDRESS}:{GRPC_PORT}") as channel:
 
             message = self.handle_request(request)
             return message

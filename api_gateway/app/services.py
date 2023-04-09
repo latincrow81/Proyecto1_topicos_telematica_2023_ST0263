@@ -1,14 +1,16 @@
+import os
+
 import grpc
 
 
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
 from app.protos import messages_pb2_grpc, messages_pb2
 
-config = dotenv_values("../.env")
+load_dotenv()
 
-HOST_GRPC = config.get('HOST_GRPC')
-PORT_GRPC = config.get('PORT_GRPC')
+HOST_GRPC = os.getenv('HOST_GRPC')
+PORT_GRPC = os.getenv('PORT_GRPC')
 
 
 def send_message(message: messages_pb2.Message) -> str:

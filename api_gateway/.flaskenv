@@ -7,3 +7,8 @@
 FLASK_APP=wsgi:app
 FLASK_ENV=development
 FLASK_DEBUG=1
+ROOT_PATH=/app/src/files
+HOST_MOM=localhost
+PORT_MOM=50051
+USER=guest
+PASSWORD=guest
