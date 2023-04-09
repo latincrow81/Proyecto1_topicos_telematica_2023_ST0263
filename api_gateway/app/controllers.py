@@ -1,4 +1,3 @@
-import json
 from flask import Response, request
 
 from .protos import messages_pb2

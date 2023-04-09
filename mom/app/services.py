@@ -4,8 +4,8 @@ from concurrent import futures
 from enum import Enum
 from typing import Optional, Dict
 
-from controllers import create_queue
-from protos import messages_pb2_grpc
+from app.controllers import create_queue
+from app.protos import messages_pb2_grpc
 
 SERVER_ADDRESS = os.getenv("HOST_MOM")
 GRPC_PORT = os.getenv("PORT_MOM")

@@ -3,7 +3,7 @@ import grpc
 
 from dotenv import dotenv_values
 
-from api_gateway.app.protos import messages_pb2_grpc, messages_pb2
+from app.protos import messages_pb2_grpc, messages_pb2
 
 config = dotenv_values("../.env")
 
