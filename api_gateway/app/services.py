@@ -12,7 +12,7 @@ PORT_GRPC = config.get('PORT_GRPC')
 
 
 def send_message(message: messages_pb2.Message) -> str:
-    with grpc.insecure_channel(f"mom:50051") as channel:
+    with grpc.insecure_channel(f"localhost:50051") as channel:
         stub = messages_pb2_grpc.MessagesStub(channel)
         response = stub.GetSendMessage(message)
 
