@@ -1,16 +1,10 @@
 import json
-import os
 from multiprocessing.shared_memory import ShareableList
-
-host_grpc = os.getenv("HOST_GRPC")
-grpc_port = os.getenv("PORT_GRPC")
-rmq_user = os.getenv('USER')
-rmq_password = os.getenv('PASSWORD')
 
 
 # Controllador para operaciones de cola, como mvp todas las colas son de profundidad 5 y ordenamiento FIFO
 
-def create_queue(queue_name):     
+def create_queue(queue_name):
     shared_memory_list = ShareableList([' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024], name=queue_name)
     return shared_memory_list
 
