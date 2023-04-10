@@ -1,5 +1,5 @@
 import json
-from multiprocessing.shared_memory import ShareableList, unlink_shared_memory
+from multiprocessing.shared_memory import ShareableList
 from momdb import db
 from models import Queue, Topic
 
@@ -14,7 +14,7 @@ def create_queue(queue_name):
 def delete_queue(queue_name):
     try:
         shared_memory_list = ShareableList(name=queue_name)
-        shared_memory_list.unlink()
+        shared_memory_list.shm.unlink()
         queue = Queue.query.filter_by(name=queue_name).first()
         db.session.delete(queue)
         db.session.commit()
@@ -53,7 +53,7 @@ def create_topic(topic_name):
 def delete_topic(topic_name):
     try:
         shared_memory_list = ShareableList(name=topic_name)
-        shared_memory_list.unlink()
+        shared_memory_list.shm.unlink()
         topic = Topic.query.filter_by(name=topic_name).first()
         db.session.delete(topic)
         db.session.commit()
