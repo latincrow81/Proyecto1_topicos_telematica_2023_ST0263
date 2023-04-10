@@ -1,7 +1,6 @@
 import json
 from multiprocessing.shared_memory import ShareableList
-from momdb import db
-from models import Queue, Topic
+from .models import Queue, Topic
 
 
 # Controllador para operaciones de cola y topico, como mvp todas las colas y topicos son de profundidad 5 y ordenamiento FIFO

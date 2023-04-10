@@ -1,4 +1,4 @@
-
+from .momdb import db
 
 
 class Queue(db.Model):
