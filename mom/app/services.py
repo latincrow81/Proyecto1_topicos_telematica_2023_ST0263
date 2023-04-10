@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Optional, Dict
 
 from app.controllers import create_queue
-from app.protos import messages_pb2_grpc
+from app.protos import messages_pb2_grpc, messages_pb2
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,6 +23,11 @@ class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
 
             message = self.handle_request(request)
             return message
+
+    #Recibe
+    def GetSendMessage(self, request, context):
+        message = self.handle_request(request)
+        return messages_pb2.Result(result=message)
 
     @staticmethod
     def handle_request(request) -> Optional[Dict]:
