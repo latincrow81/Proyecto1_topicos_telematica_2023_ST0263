@@ -1,5 +1,13 @@
-from .auth.models import User, AnonymousUser
+from momdb import db
 
-# Define your models here.
-# You can also define them inside a package and import them here.
-# This is only a convenience so that all your models are available from a single module.
+
+class Queue(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    messages = db.relationship('Message', backref='queue', lazy=True)
+
+
+class Topic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)
+    subscribers = db.relationship('Subscriber', backref='topic', lazy=True)
