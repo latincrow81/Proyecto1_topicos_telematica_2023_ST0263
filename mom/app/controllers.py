@@ -1,5 +1,5 @@
 import json
-from multiprocessing.shared_memory import ShareableList
+from multiprocessing.shared_memory import ShareableList, unlink_shared_memory
 from momdb import db
 from models import Queue, Topic
 
