@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask
-
 from app.services import serve
 
 
@@ -16,7 +15,6 @@ def create_app(environment='development'):
     env = os.environ.get('FLASK_ENV', environment)
     app.config.from_object(config[env])
     config[env].configure(app)
-
     # start grpc server
     serve()
 
