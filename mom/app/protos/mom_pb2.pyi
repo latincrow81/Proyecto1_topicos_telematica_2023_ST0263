@@ -4,7 +4,13 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class Message(_message.Message):
+class MessageResponse(_message.Message):
+    __slots__ = ["payload"]
+    PAYLOAD_FIELD_NUMBER: _ClassVar[int]
+    payload: str
+    def __init__(self, payload: _Optional[str] = ...) -> None: ...
+
+class QueueRequest(_message.Message):
     __slots__ = ["op", "payload", "queue_name"]
     OP_FIELD_NUMBER: _ClassVar[int]
     PAYLOAD_FIELD_NUMBER: _ClassVar[int]
@@ -14,7 +20,7 @@ class Message(_message.Message):
     queue_name: str
     def __init__(self, queue_name: _Optional[str] = ..., payload: _Optional[str] = ..., op: _Optional[str] = ...) -> None: ...
 
-class SendMessageResponse(_message.Message):
+class QueueResponse(_message.Message):
     __slots__ = ["result"]
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: str

@@ -1,18 +1,18 @@
 from flask import Response, request
 
-from .protos import messages_pb2
+from app.protos import mom_pb2
 from .services import send_message
 
-#Manda mensaje para que la cola se cree
+# Manda mensaje para que la cola se cree
 
 
 def create_queue(queue_name: str) -> Response:
-    message = messages_pb2.Message(queue_name=queue_name, op='create', payload='')
+    message = mom_pb2.QueueRequest(queue_name=queue_name, op='create', payload='')
     grpc_response = send_message(message)
-    return Response(status=200, response=f"Cola creada {grpc_response}")
+    return Response(status=200, response=f"Cola creada como {queue_name}, {grpc_response}")
 
 
-#Manda un request de Grpc para meter un mesnaje en la cola
+# Manda un request de Grpc para meter un mensaje en la cola
 def post_to_queue(queue_name: str) -> Response:
     request_data = request.json
     payload = request_data.get('payload')
@@ -22,7 +22,7 @@ def post_to_queue(queue_name: str) -> Response:
     return Response(status=200, response=f"Mensaje enviado a cola {queue_name}")
 
 
-#(POP) Lee el ultimo mensaje de la cola 
+# (POP) Lee el ultimo mensaje de la cola
 def read_from_queue():
     request_data = request.json
     queue_name = request_data.get('queue_name')

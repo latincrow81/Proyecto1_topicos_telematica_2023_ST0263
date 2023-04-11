@@ -1,36 +1,30 @@
-import os
 import grpc
 from concurrent import futures
 from enum import Enum
 from typing import Optional, Dict
 
-from app.controllers import create_queue
-from app.protos import messages_pb2_grpc
-from dotenv import load_dotenv
+from app.controllers import create_queue, push_message_to_queue
+from dotenv import dotenv_values
 
-load_dotenv()
+from app.protos import mom_pb2_grpc, mom_pb2
 
-SERVER_ADDRESS = os.getenv('HOST_MOM')
-GRPC_PORT = os.getenv('PORT_MOM')
+config = dotenv_values(".env")
+
+SERVER_ADDRESS = config.get('HOST_MOM')
+GRPC_PORT = config.get('PORT_MOM')
 
 
-class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
-
-    # Abre conexión
-    def handle_grpc_request_from_gateway(self, request, context):
-
-        with grpc.insecure_channel(f"{SERVER_ADDRESS}:{GRPC_PORT}") as channel:
-
-            message = self.handle_request(request)
-            return message
-
-    @staticmethod
-    def handle_request(request) -> Optional[Dict]:
-        if request['op'] is Ops.CREATE:
-            queue_name = request.get('queue_name')
-            create_queue(queue_name)
-        elif request['op'] is Ops.POST:
-            pass
+class Handler(mom_pb2_grpc.MessageQueueServicer):
+    def PushMessage(self, request, context):
+        if request.op == Ops.CREATE.value:
+            queue_name = request.queue_name
+            response = create_queue(queue_name)
+            return mom_pb2.QueueResponse(result=str(response))
+        elif request.op == Ops.POST.value:
+            queue_name = request.queue_name
+            payload = request.payload
+            response = push_message_to_queue(queue_name, payload)
+            return mom_pb2.QueueResponse(result="message pushed to queue")
         elif request['op'] is Ops.GET:
             pass
         else:
@@ -39,8 +33,8 @@ class ListFilesServicer(messages_pb2_grpc.MessagesServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    messages_pb2_grpc.add_MessagesServicer_to_server(messages_pb2_grpc.MessagesServicer(), server)
-    server.add_insecure_port('localhost:50051')
+    mom_pb2_grpc.add_MessageQueueServicer_to_server(Handler(), server)
+    server.add_insecure_port('[::]:' + GRPC_PORT)
     server.start()
     print(f'Servidor en ejecución en el puerto {GRPC_PORT}...')
     server.wait_for_termination()
