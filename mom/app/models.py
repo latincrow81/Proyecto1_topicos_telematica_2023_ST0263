@@ -1,13 +1,13 @@
-from app.momdb import db
+from flask_sqlalchemy import SQLAlchemy
 
-class Message(db.Model):
-    __tablename__ = 'message'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(255))
-    queue_id = db.Column(db.Integer, db.ForeignKey('queue.id'))
+db = SQLAlchemy()
+
 
 class Queue(db.Model):
-    __tablename__ = 'queue'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-    messages = db.relationship('Message', backref='queue', lazy=True)
+    name = db.Column(db.String(255), nullable=False, unique=True)
+
+
+class Topic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False, unique=True)
