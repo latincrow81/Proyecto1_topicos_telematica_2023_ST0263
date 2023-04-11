@@ -1,7 +1,7 @@
 # ST0263 Tópicos Especiales en Telematica
 
 # Estudiantes: 
-- Mauricio Escudero, 
+- Mauricio Escudero, mescude1@eafit.edu.co
 - Jose Alejandro Sánchez Sánchez, jasanchez@eafit.edu.co
 - Edison Alejandro Torres Muñoz, eatorresm@eafit.edu.co
 #
@@ -14,13 +14,30 @@ Diseñar e implementar un middleware orientado a mensajes (MOM) que permita a un
 #
 # 1.1. Que aspectos cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
+1.  Conexión y desconexión al servidor.
+2. Ciclo de vida de tópicos (los canales tienen nombres únicos):
+- Crear un tópico
+- Borrar un tópico
+- Listar los tópicos
+3. Ciclo de vida de colas (las colas tienen nombres únicos):
+- Crear una cola
+- Borrar una cola
+- Listar las colas
+4. Envío y recepción de un mensaje a un tópico.
+5. Envío y recepción de un mensaje a una cola.
+6. Memoria compartida.
+7. Particionamiento y Transparencia.
+8. API REST. 
+9. Implementación y despliegue en AWS.
+
 # 1.2. Que aspectos NO cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
+Todos los requerimientos obligatorios al igual que algunos opcionales fueron implementados.
+
 # 2. Información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
-![Arquitectura](./assets/Arquitectura.jpeg)
+![Arquitectura](./assets/Arquitectura.png)
 
-El cliente se conecta a traves de internet y hace peticiones a una API atraves de HTTP, ésta de igual manera acompaña a la conexión entre el Flask(ApiGateway) y la memoria compartida. La comunicación gRPC y MOM funciona a traves de 'colas'.
-
+El cliente se conecta a través de Internet y realiza peticiones a una API. A su vez, la API se conecta al Flask (ApiGateway) para establecer la comunicación. La comunicación entre el Gateway y el MOM se realiza a través de gRPC. La implementación de colas y tópicos hacen parte del MOM, junto con su respectiva memoria compartida.
 # 3. Descripción del ambiente de desarrollo y técnico: lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
 ## como se compila y ejecuta.
@@ -46,9 +63,9 @@ El cliente se conecta a traves de internet y hace peticiones a una API atraves d
 # 5. otra información que considere relevante para esta actividad.
 
 # referencias:
-<debemos siempre reconocer los créditos de partes del código que reutilizaremos, así como referencias a youtube, o referencias bibliográficas utilizadas para desarrollar el proyecto o la actividad>
-## sitio1-url 
-## sitio2-url
-## url de donde tomo info para desarrollar este proyecto
 
-#### versión README.md -> 1.0 (2022-agosto)
+- Flask SQLAlchemy Patterns. (s.f.). Recuperado de https://flask-es.readthedocs.io/patterns/sqlalchemy/
+- Flask Skeleton. (s.f.). Recuperado de https://github.com/enwawerueli/flask-skeleton/blob/master/flask_skeleton/skeleton/app/__init__.py 
+- GitHub - Flask Skeleton. (s.f.). Recuperado de https://github.com/enwawerueli/flask-skeleton
+- gRPC - What is gRPC? (s.f.). Recuperado de https://grpc.io/docs/what-is-grpc/introduction/
+- Python Documentation - multiprocessing.shared_memory. (s.f.). Recuperado de https://docs.python.org/3/library/multiprocessing.shared_memory.html
