@@ -1,12 +1,11 @@
 import os
 from flask import Flask
 from app.services import serve
-from .momdb import db, Config
-from .models import Queue, Topic
+from app.momdb import db
+from app.models import Queue, Message
 
 
 def create_app(environment='development'):
-
     from .config import config
     from .views import main_blueprint
 
@@ -20,9 +19,9 @@ def create_app(environment='development'):
     db.init_app(app)
 
     with app.app_context():
-        # crear las tablas si no existen
+        # Crear las tablas si no existen
         db.create_all()
-    # start grpc server
+
+    # Iniciar el servidor gRPC
     serve()
     return app
-

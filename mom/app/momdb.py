@@ -1,19 +1,15 @@
 import os
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-# obtener la ruta absoluta del directorio actual
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+app = Flask(__name__)
 
-# configuración de la base de datos SQLite
-class Config:
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{os.path.join(basedir, "mom.db")}'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "mom.db")}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db = SQLAlchemy(app)
 
-# instancia de la base de datos
-db = SQLAlchemy()
-
-
-def get_session():
-    return db.session
+if __name__ == '__main__':
+    app.run()

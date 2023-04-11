@@ -1,13 +1,16 @@
 import json
 from multiprocessing.shared_memory import ShareableList
-from .momdb import db
-from .models import Queue, Topic
+from app.momdb import db
+from app.models import Queue, Message
 
 
 # Controllador para operaciones de cola y topico, como mvp todas las colas y topicos son de profundidad 5 y ordenamiento FIFO
 
 def create_queue(queue_name):
     shared_memory_list = ShareableList([' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024], name=queue_name)
+    queue = Queue(name=queue_name)
+    db.session.add(queue)
+    db.session.commit()
     return shared_memory_list
 
 
@@ -43,23 +46,6 @@ def pop_message_from_queue(queue_name):
             value = temp_list[j]
             temp_list[j] = ' ' * 1024
             return value
-
-
-def create_topic(topic_name):
-    shared_memory_list = ShareableList([' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024], name=topic_name)
-    return shared_memory_list
-
-
-def delete_topic(topic_name):
-    try:
-        shared_memory_list = ShareableList(name=topic_name)
-        shared_memory_list.shm.unlink()
-        topic = Topic.query.filter_by(name=topic_name).first()
-        db.session.delete(topic)
-        db.session.commit()
-        return True
-    except FileNotFoundError:
-        return False
 
 
 def push_message_to_topic(topic_name, payload):
