@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from app.services import serve
-from .momdb import db
+from .momdb import db, Config
 from .models import Queue, Topic
 
 
@@ -18,11 +18,11 @@ def create_app(environment='development'):
     config[env].configure(app)
 
     db.init_app(app)
-    with app.app_context():
-        db.create_all()
 
+    with app.app_context():
+        # crear las tablas si no existen
+        db.create_all()
     # start grpc server
     serve()
-
     return app
 
