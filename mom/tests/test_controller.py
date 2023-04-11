@@ -12,7 +12,7 @@ class TestControllerMom(TestCase):
         # when
         queue = create_queue(self.queue_name)
         # then
-        self.assertTrue(True)
+        self.assertIsInstance(queue, list)
         self.assertEqual(queue.shm.name, self.queue_name)
 
     def test_push_message_to_queue(self):

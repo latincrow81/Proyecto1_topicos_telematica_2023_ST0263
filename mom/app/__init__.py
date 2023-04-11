@@ -2,7 +2,6 @@ import os
 from flask import Flask
 from app.services import serve
 from app.momdb import db
-from app.models import Queue, Message
 
 
 def create_app(environment='development'):
@@ -25,3 +24,12 @@ def create_app(environment='development'):
     # Iniciar el servidor gRPC
     serve()
     return app
+
+
+app = create_app()
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
+
