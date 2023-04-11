@@ -3,7 +3,7 @@ from concurrent import futures
 from enum import Enum
 from typing import Optional, Dict
 
-from app.controllers import create_queue, push_message_to_queue
+from app.controllers import create_queue, push_message_to_queue, pop_message_from_queue
 from dotenv import dotenv_values
 
 from app.protos import mom_pb2_grpc, mom_pb2
@@ -24,9 +24,15 @@ class Handler(mom_pb2_grpc.MessageQueueServicer):
             queue_name = request.queue_name
             payload = request.payload
             response = push_message_to_queue(queue_name, payload)
-            return mom_pb2.QueueResponse(result="message pushed to queue")
-        elif request['op'] is Ops.GET:
+            return mom_pb2.QueueResponse(result=str(response))
+        else:
             pass
+
+    def PullMessage(self, request, context):
+        if request.op == Ops.GET.value:
+            queue_name = request.queue_name
+            response = pop_message_from_queue(queue_name)
+            return mom_pb2.MessageResponse(payload=response)
         else:
             pass
 

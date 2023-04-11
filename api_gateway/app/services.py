@@ -1,3 +1,4 @@
+import json
 
 import grpc
 
@@ -18,3 +19,10 @@ def send_message(message) -> str:
 
     return response.result
 
+
+def get_message(message) -> str:
+    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+        stub = mom_pb2_grpc.MessageQueueStub(channel)
+        response = stub.PullMessage(message)
+
+    return response.payload
