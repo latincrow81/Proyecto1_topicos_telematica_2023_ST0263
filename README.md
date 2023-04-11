@@ -38,16 +38,34 @@ Todos los requerimientos obligatorios al igual que algunos opcionales fueron imp
 ![Arquitectura](./assets/Arquitectura.png)
 
 El cliente se conecta a través de Internet y realiza peticiones a una API. A su vez, la API se conecta al Flask (ApiGateway) para establecer la comunicación. La comunicación entre el Gateway y el MOM se realiza a través de gRPC. La implementación de colas y tópicos hacen parte del MOM, junto con su respectiva memoria compartida.
+
 # 3. Descripción del ambiente de desarrollo y técnico: lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
-## como se compila y ejecuta.
-## detalles del desarrollo.
-## detalles técnicos
-## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
-## opcional - detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
-## 
-## opcionalmente - si quiere mostrar resultados o pantallazos 
+El lenguaje que se utilizó fue Python y se realizó una aplicación Flask que se conecta a un servidor donde este recibe los mensajes, los manda a una base de datos local y ya dependiendo de lo que se quiera se puede:
 
+- Crear colas y tópicos.
+- Eliminar colas y tópicos.
+- Enviar mensajes a la cola o al tópico
+- Extraer mensajes de la cola o del tópico
+- Listar colas y tópicos desde la base de datos
+
+# 3.1. Como se compila y ejecuta.
+
+
+
+# 3.2. Detalles del desarrollo.
+
+
+
+# 3.3. Detalles técnicos
+
+
+
+# 3.4. Descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
+
+
+
+# 3.5. detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
 # 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
 # IP o nombres de dominio en nube o en la máquina servidor.
