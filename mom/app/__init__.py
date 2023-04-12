@@ -1,7 +1,9 @@
 import os
 from flask import Flask
+
+from app.init_db import init_db
+
 from app.services import serve
-from app.momdb import db
 
 
 def create_app(environment='development'):
@@ -15,21 +17,8 @@ def create_app(environment='development'):
     app.config.from_object(config[env])
     config[env].configure(app)
 
-    db.init_app(app)
-
-    with app.app_context():
-        # Crear las tablas si no existen
-        db.create_all()
-
-    # Iniciar el servidor gRPC
+    init_db()
+    # start grpc server
     serve()
-    return app
 
-
-app = create_app()
-
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db.session.remove()
 

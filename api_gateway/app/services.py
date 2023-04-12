@@ -1,16 +1,34 @@
 import grpc
+
 from dotenv import dotenv_values
-from api_gateway.app.protos import messages_pb2_grpc, messages_pb2
 
-config = dotenv_values("../.env")
+from app.protos import mom_pb2_grpc
 
-HOST = config.get('HOST')
-PORT = config.get('PORT')
+config = dotenv_values(".env")
+
+HOST_GRPC = config.get('HOST_MOM')
+PORT_GRPC = config.get('PORT_MOM')
 
 
-def send_message(message: messages_pb2.Message) -> str:
-    with grpc.insecure_channel(f"{HOST}:{PORT}") as channel:
-        stub = messages_pb2_grpc.MessagesStub(channel)
-        message_pb = messages_pb2.Message(queue_name=message.queue_name, op=message.op, payload=message.payload)
-        response = stub.GetSendMessage(message_pb)
+def send_message(message) -> str:
+    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+        stub = mom_pb2_grpc.MessageQueueStub(channel)
+        response = stub.PushMessage(message)
+
     return response.result
+
+
+def get_message(message) -> str:
+    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+        stub = mom_pb2_grpc.MessageQueueStub(channel)
+        response = stub.PullMessage(message)
+
+    return response.payload
+
+
+def get_message_topic(message) -> str:
+    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+        stub = mom_pb2_grpc.MessageQueueStub(channel)
+        response = stub.PullMessage(message)
+
+    return response.payload
