@@ -23,6 +23,13 @@ def post_to_queue(queue_name: str) -> Response:
     return Response(status=200, response=f"Mensaje enviado a cola {queue_name}, {grpc_response}")
 
 
+def delete_queue(queue_name: str) -> Response:
+    queue_message = mom_pb2.QueueRequest(queue_name=queue_name, op='delete')
+    grpc_response = send_message(queue_message)
+
+    return Response(status=200, response=f"Mensaje enviado a cola {queue_name}, {grpc_response}")
+
+
 # (POP) Lee el ultimo mensaje de la cola
 def read_from_queue(queue_name: str) -> Response:
     queue_message = mom_pb2.QueueRequest(queue_name=queue_name, op='get')

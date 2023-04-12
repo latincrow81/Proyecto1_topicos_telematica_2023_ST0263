@@ -3,9 +3,8 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+from app.init_db import init_db
 from app.services import serve
-
-db = SQLAlchemy()
 
 
 def create_app(environment='development'):
@@ -20,10 +19,7 @@ def create_app(environment='development'):
     app.config.from_object(config[env])
     config[env].configure(app)
 
-    # iniciar db
-    db.init_app(app)
-
-
+    init_db()
     # start grpc server
     serve()
 

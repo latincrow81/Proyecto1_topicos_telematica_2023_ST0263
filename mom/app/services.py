@@ -2,7 +2,7 @@ import grpc
 from concurrent import futures
 from enum import Enum
 
-from app.controllers import create_queue, push_message_to_queue, pop_message_from_queue
+from app.controllers import create_queue, push_message_to_queue, pop_message_from_queue, list_queues, delete_queue
 from dotenv import dotenv_values
 
 from app.protos import mom_pb2_grpc, mom_pb2
@@ -24,6 +24,10 @@ class Handler(mom_pb2_grpc.MessageQueueServicer):
             payload = request.payload
             response = push_message_to_queue(queue_name, payload)
             return mom_pb2.QueueResponse(result=str(response))
+        elif request.op == Ops.DELETE.value:
+            queue_name = request.queue_name
+            response = delete_queue(queue_name)
+            return mom_pb2.QueueResponse(result=str(response))
         else:
             pass
 
@@ -31,6 +35,9 @@ class Handler(mom_pb2_grpc.MessageQueueServicer):
         if request.op == Ops.GET.value:
             queue_name = request.queue_name
             response = pop_message_from_queue(queue_name)
+            return mom_pb2.MessageResponse(payload=response)
+        elif request.op == Ops.LIST.value:
+            response = list_queues()
             return mom_pb2.MessageResponse(payload=response)
         else:
             pass
@@ -49,3 +56,5 @@ class Ops(Enum):
     CREATE = 'create'
     POST = 'post'
     GET = 'get'
+    DELETE = 'delete'
+    LIST = 'list'

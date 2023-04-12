@@ -1,19 +1,22 @@
 import json
 from multiprocessing.shared_memory import ShareableList
 
+from app.init_db import db_session
 from app.models import Queue
-from app.utils import get_db_connection
-
 
 # Controllador para operaciones de cola, como mvp todas las colas son de profundidad 5 y ordenamiento FIFO
 
+
+def list_queues():
+    queue_list = Queue.query.all()
+    return queue_list
+
 def create_queue(queue_name):
     # guardando nombre de cola en lista
-    db = get_db_connection()
-    queue = Queue(name=queue_name)
-    db.session.add(queue)
-    db.session.commit()
     # creando cola en memoria
+    queue = Queue(name=queue_name)
+    db_session.add(queue)
+    db_session.commit()
     shared_memory_list = ShareableList([' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024, ' ' * 1024], name=queue_name)
     return shared_memory_list
 
@@ -41,3 +44,17 @@ def pop_message_from_queue(queue_name):
             value = temp_list[j]
             temp_list[j] = ' ' * 1024
             return value
+
+
+def delete_queue(queue_name):
+    try:
+        # remover queue de lista
+        queue = Queue.query.filter(Queue.name == queue_name).first()
+        db_session.delete(queue)
+        db_session.commit()
+        # remover queue de memoria
+        shared_memory_list = ShareableList(name=queue_name)
+        shared_memory_list.shm.unlink()
+        return True
+    except FileNotFoundError:
+        return "Cola no encontrada"

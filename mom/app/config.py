@@ -23,7 +23,7 @@ class DevelopmentConfig(BaseConfig):
 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DEVEL_DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, 'database-devel.sqlite3'))
+        'DEVEL_DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, '../mom_db.db'))
 
 
 class TestingConfig(BaseConfig):
@@ -32,14 +32,14 @@ class TestingConfig(BaseConfig):
     TESTING = True
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'TEST_DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, 'database-test.sqlite3'))
+        'TEST_DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, '../mom_db.db'))
 
 
 class ProductionConfig(BaseConfig):
     """Production configuration."""
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, 'database.sqlite3'))
+        'DATABASE_URL', 'sqlite:///' + os.path.join(base_dir, '../mom_db.db'))
     WTF_CSRF_ENABLED = True
 
 
