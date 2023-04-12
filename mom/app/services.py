@@ -41,10 +41,12 @@ class Handler(mom_pb2_grpc.MessageQueueServicer):
             return mom_pb2.MessageResponse(payload=response)
         else:
             pass
+        return{}
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+
     mom_pb2_grpc.add_MessageQueueServicer_to_server(Handler(), server)
     server.add_insecure_port('[::]:' + GRPC_PORT)
     server.start()

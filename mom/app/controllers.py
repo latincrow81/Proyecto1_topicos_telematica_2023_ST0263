@@ -1,11 +1,12 @@
 import json
+
 from multiprocessing.shared_memory import ShareableList
 
 from app.init_db import db_session
 from app.models import Queue, Topic
 
-
-# Controllador para operaciones de cola, como mvp todas las colas son de profundidad 5 y ordenamiento FIFO
+# Controlador para operaciones de cola y topico, como mvp todas las colas y topicos son de profundidad 5 y
+# ordenamiento FIFO
 
 
 def list_queues():
@@ -90,6 +91,7 @@ def delete_queue(queue_name):
     except FileNotFoundError:
         return "Cola no encontrada"
 
+
 def delete_topic(topic_name):
     try:
         # remover topico de lista
@@ -102,3 +104,4 @@ def delete_topic(topic_name):
         return True
     except FileNotFoundError:
         return "Topico no encontrado"
+

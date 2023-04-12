@@ -1,14 +1,12 @@
 import os
-
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
 from app.init_db import init_db
+
 from app.services import serve
 
 
 def create_app(environment='development'):
-
     from .config import config
     from .views import main_blueprint
 
@@ -23,4 +21,4 @@ def create_app(environment='development'):
     # start grpc server
     serve()
 
-    return app
+
