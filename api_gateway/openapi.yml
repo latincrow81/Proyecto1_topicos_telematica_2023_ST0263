@@ -125,6 +125,122 @@ paths:
       x-openapi-router-controller: app.controllers
       tags:
         - list_queues
+  /list_topics:
+    get:
+      summary: list topics
+      responses:
+        '200':
+          description: list of available topics
+          content:
+            application/json: { }
+        '404':
+          description: topics not found
+          content:
+            application/json: { }
+      description: List topics
+      operationId: list_topics
+      x-openapi-router-controller: app.controllers
+      tags:
+        - list_topics
+  /read_from_topic/{topic_name}:
+    get:
+      summary: read from topic
+      parameters:
+        - schema:
+            type: string
+          name: topic_name
+          in: path
+          required: true
+      responses:
+        '200':
+          description: message from topic
+          content:
+            application/json: { }
+        '404':
+          description: topic not found
+          content:
+            application/json: { }
+      description: Read message on topic
+      operationId: read_from_topic
+      x-openapi-router-controller: app.controllers
+      tags:
+        - read_from_topic
+  /post_to_topic/{topic_name}:
+    post:
+      summary: post message to topic
+      parameters:
+        - schema:
+            type: string
+          name: topic_name
+          in: path
+          required: true
+      requestBody:
+        description: payload for topic
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payload'
+      responses:
+        '200':
+          description: Message post to topic
+          content:
+            application/json: {}
+        '424':
+          description: Failed dependency MOM
+          content:
+            application/json: { }
+      description: post message to topic
+      operationId: post_to_topic
+      x-openapi-router-controller: app.controllers
+      tags:
+        - post_to_topic
+  /create_topic/{topic_name}:
+    post:
+      summary: Create topic with name on mom
+      parameters:
+        - schema:
+            type: string
+          name: topic_name
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Topic created
+          content:
+            application/json: { }
+        '424':
+          description: Failed dependency MOM
+          content:
+            application/json: { }
+      description: create-topic
+      operationId: create_topic
+      x-openapi-router-controller: app.controllers
+      tags:
+        - create_topic
+  /delete_topic/{topic_name}:
+    post:
+      summary: Delete topic with name on mom
+      parameters:
+        - schema:
+            type: string
+          name: topic_name
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Topic deleted
+          content:
+            application/json: { }
+        '424':
+          description: Failed dependency MOM
+          content:
+            application/json: { }
+      description: delete-topic
+      operationId: delete_topic
+      x-openapi-router-controller: app.controllers
+      tags:
+        - delete_topic
 
 components:
   schemas:

@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import mom_pb2 as mom__pb2
+import app.protos.mom_pb2 as mom__pb2
 
 
 class MessageQueueStub(object):
