@@ -49,23 +49,75 @@ El lenguaje que se utilizó fue Python y se realizó una aplicación Flask que s
 - Extraer mensajes de la cola o del tópico
 - Listar colas y tópicos desde la base de datos
 
+## El requirements que se utilizó para el Api_Gateway es:
+
+        click==8.1.3
+        Flask==2.0.3
+        flask-injector==0.13.0
+        connexion[swagger-ui]==2.13.1
+        dynaconf==3.1.8
+        Flask-Login
+        Flask-SQLAlchemy
+        Flask-WTF==1.1.1
+        itsdangerous==2.1.2
+        Jinja2==3.0.3
+        MarkupSafe==2.1.2
+        python-dotenv==1.0.0
+        SQLAlchemy==1.4.41
+        Werkzeug==2.2.3
+        WTForms==3.0.1
+        gunicorn==20.1.0
+        validators==0.20.0
+        email_validator==1.3.1
+        grpcio==1.51.3
+        protobuf==4.22.0
+
+## El requirements que se utilizó para el Servidor es:
+
+        Flask==2.0.3
+        flask-injector==0.13.0
+        Flask-WTF==1.1.1
+        itsdangerous==2.1.2
+        Jinja2==3.0.3
+        MarkupSafe==2.1.2
+        python-dotenv==1.0.0
+        Werkzeug==2.2.3
+        WTForms==3.0.1
+        gunicorn==20.1.0
+        validators==0.20.0
+        email_validator==1.3.1
+        grpcio==1.51.3
+        protobuf==4.22.0
+        Flask-SQLAlchemy==3.0.3
+        SQLAlchemy~=2.0.9
+
 # 3.1. Como se compila y ejecuta.
 
+## En local:
 
+Se comienza ejecutando el yml con:
+
+        docker-compose up
+
+## Interacción con el Servidor en AWS:
+
+Ingresando al subdomino en el Browser.
 
 # 3.2. Detalles del desarrollo.
 
 
 
 # 3.3. Detalles técnicos
-
+El subdominio llama al api_gateway y se ejecuta en plano en una de la maquina virtual de AWS y con la llave generada para el acceso se entrar a la maquina; para asi poder saber que hay dentro de ella.
 
 
 # 3.4. Descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
 
 
 
-# 3.5. detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
+# 3.5. Detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
+
+
 # 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
 # IP o nombres de dominio en nube o en la máquina servidor.
