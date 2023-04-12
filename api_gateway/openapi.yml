@@ -31,7 +31,7 @@ paths:
       operationId: read_from_queue
       x-openapi-router-controller: app.controllers
       tags:
-        - file_list
+        - read_from_queue
   /post_to_queue/{queue_name}:
     post:
       summary: post message to queue

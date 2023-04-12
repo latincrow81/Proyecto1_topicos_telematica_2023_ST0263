@@ -1,7 +1,6 @@
 import grpc
 from concurrent import futures
 from enum import Enum
-from typing import Optional, Dict
 
 from app.controllers import create_queue, push_message_to_queue, pop_message_from_queue
 from dotenv import dotenv_values
