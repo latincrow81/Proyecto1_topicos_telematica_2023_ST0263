@@ -1,13 +1,18 @@
-from flask_sqlalchemy import SQLAlchemy
+# Define your models here.
+# You can also define them inside a package and import them here.
+# This is only a convenience so that all your models are available from a single module.
+from sqlalchemy import Column, Integer, String
 
-db = SQLAlchemy()
-
-
-class Queue(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True)
+from app.init_db import Base
 
 
-class Topic(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True)
+class Queue(Base):
+    __tablename__ = 'queue'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False, unique=True)
+
+
+class Topic(Base):
+    __tablename__ = 'topic'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(255), nullable=False, unique=True)
