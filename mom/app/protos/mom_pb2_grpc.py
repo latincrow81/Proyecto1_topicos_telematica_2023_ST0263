@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import app.protos.mom_pb2 as mom__pb2
+import mom_pb2 as mom__pb2
 
 
 class MessageQueueStub(object):
@@ -26,6 +26,16 @@ class MessageQueueStub(object):
                 request_serializer=mom__pb2.QueueRequest.SerializeToString,
                 response_deserializer=mom__pb2.MessageResponse.FromString,
                 )
+        self.PushTopic = channel.unary_unary(
+                '/MessageQueue/PushTopic',
+                request_serializer=mom__pb2.TopicRequest.SerializeToString,
+                response_deserializer=mom__pb2.TopicResponse.FromString,
+                )
+        self.PullTopic = channel.unary_unary(
+                '/MessageQueue/PullTopic',
+                request_serializer=mom__pb2.TopicRequest.SerializeToString,
+                response_deserializer=mom__pb2.TopicResponse.FromString,
+                )
 
 
 class MessageQueueServicer(object):
@@ -45,6 +55,18 @@ class MessageQueueServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PushTopic(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PullTopic(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MessageQueueServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -57,6 +79,16 @@ def add_MessageQueueServicer_to_server(servicer, server):
                     servicer.PullMessage,
                     request_deserializer=mom__pb2.QueueRequest.FromString,
                     response_serializer=mom__pb2.MessageResponse.SerializeToString,
+            ),
+            'PushTopic': grpc.unary_unary_rpc_method_handler(
+                    servicer.PushTopic,
+                    request_deserializer=mom__pb2.TopicRequest.FromString,
+                    response_serializer=mom__pb2.TopicResponse.SerializeToString,
+            ),
+            'PullTopic': grpc.unary_unary_rpc_method_handler(
+                    servicer.PullTopic,
+                    request_deserializer=mom__pb2.TopicRequest.FromString,
+                    response_serializer=mom__pb2.TopicResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -101,5 +133,39 @@ class MessageQueue(object):
         return grpc.experimental.unary_unary(request, target, '/MessageQueue/PullMessage',
             mom__pb2.QueueRequest.SerializeToString,
             mom__pb2.MessageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PushTopic(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/MessageQueue/PushTopic',
+            mom__pb2.TopicRequest.SerializeToString,
+            mom__pb2.TopicResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PullTopic(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/MessageQueue/PullTopic',
+            mom__pb2.TopicRequest.SerializeToString,
+            mom__pb2.TopicResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

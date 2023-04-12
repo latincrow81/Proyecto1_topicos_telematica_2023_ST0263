@@ -26,3 +26,10 @@ def get_message(message) -> str:
         response = stub.PullMessage(message)
 
     return response.payload
+
+def get_message_topic(message) -> str:
+    with grpc.insecure_channel(f"{HOST_GRPC}:{PORT_GRPC}") as channel:
+        stub = mom_pb2_grpc.MessageQueueStub(channel)
+        response = stub.PullMessage(message)
+
+    return response.payload

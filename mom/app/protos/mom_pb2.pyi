@@ -25,3 +25,19 @@ class QueueResponse(_message.Message):
     RESULT_FIELD_NUMBER: _ClassVar[int]
     result: str
     def __init__(self, result: _Optional[str] = ...) -> None: ...
+
+class TopicRequest(_message.Message):
+    __slots__ = ["op", "payload", "topic_name"]
+    OP_FIELD_NUMBER: _ClassVar[int]
+    PAYLOAD_FIELD_NUMBER: _ClassVar[int]
+    TOPIC_NAME_FIELD_NUMBER: _ClassVar[int]
+    op: str
+    payload: str
+    topic_name: str
+    def __init__(self, topic_name: _Optional[str] = ..., payload: _Optional[str] = ..., op: _Optional[str] = ...) -> None: ...
+
+class TopicResponse(_message.Message):
+    __slots__ = ["result"]
+    RESULT_FIELD_NUMBER: _ClassVar[int]
+    result: str
+    def __init__(self, result: _Optional[str] = ...) -> None: ...

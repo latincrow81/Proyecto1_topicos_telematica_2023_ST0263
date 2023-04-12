@@ -85,6 +85,47 @@ paths:
       x-openapi-router-controller: app.controllers
       tags:
         - create_queue
+  /delete_queue/{queue_name}:
+    post:
+      summary: Delete queue with name on mom
+      parameters:
+        - schema:
+            type: string
+          name: queue_name
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Queue deleted
+          content:
+            application/json: { }
+        '424':
+          description: Failed dependency MOM
+          content:
+            application/json: { }
+      description: delete-queue
+      operationId: delete_queue
+      x-openapi-router-controller: app.controllers
+      tags:
+        - delete_queue
+  /list_queues:
+    get:
+      summary: list queues
+      responses:
+        '200':
+          description: list of available queues
+          content:
+            application/json: { }
+        '404':
+          description: queue not found
+          content:
+            application/json: { }
+      description: List queues
+      operationId: list_queues
+      x-openapi-router-controller: app.controllers
+      tags:
+        - list_queues
+
 components:
   schemas:
     Payload:
