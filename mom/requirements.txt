@@ -1,4 +1,4 @@
-Flask==2.0.3
+Flask
 flask-injector==0.13.0
 Flask-WTF==1.1.1
 itsdangerous==2.1.2
