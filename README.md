@@ -74,7 +74,7 @@ El lenguaje que se utilizó fue Python y se realizó una aplicación Flask que s
 
 ## El requirements que se utilizó para el Servidor es:
 
-        Flask==2.0.3
+        Flask
         flask-injector==0.13.0
         Flask-WTF==1.1.1
         itsdangerous==2.1.2
@@ -90,6 +90,7 @@ El lenguaje que se utilizó fue Python y se realizó una aplicación Flask que s
         protobuf==4.22.0
         Flask-SQLAlchemy==3.0.3
         SQLAlchemy~=2.0.9
+
 
 # 3.1. Como se compila y ejecuta.
 
