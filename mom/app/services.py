@@ -2,7 +2,14 @@ import grpc
 from concurrent import futures
 from enum import Enum
 
-from app.controllers import create_queue, push_message_to_queue, pop_message_from_queue, list_queues, delete_queue
+from app.controllers import (create_queue,
+                             push_message_to_queue,
+                             pop_message_from_queue,
+                             list_queues,
+                             delete_queue,
+                             create_topic,
+                             push_message_to_topic,
+                             delete_topic, pop_message_from_topic, list_topics)
 from dotenv import dotenv_values
 
 from app.protos import mom_pb2_grpc, mom_pb2
@@ -39,6 +46,34 @@ class Handler(mom_pb2_grpc.MessageQueueServicer):
         elif request.op == Ops.LIST.value:
             response = list_queues()
             return mom_pb2.MessageResponse(payload=response)
+        else:
+            pass
+
+    def PushTopic(self, request, context):
+        if request.op == Ops.CREATE.value:
+            topic_name = request.topic_name
+            response = create_topic(topic_name)
+            return mom_pb2.TopicResponse(result=str(response))
+        elif request.op == Ops.POST.value:
+            topic_name = request.topic_name
+            payload = request.payload
+            response = push_message_to_topic(topic_name, payload)
+            return mom_pb2.TopicResponse(result=str(response))
+        elif request.op == Ops.DELETE.value:
+            topic_name = request.topic_name
+            response = delete_topic(topic_name)
+            return mom_pb2.TopicResponse(result=str(response))
+        else:
+            pass
+
+    def PullTopic(self, request, context):
+        if request.op == Ops.GET.value:
+            topic_name = request.topic_name
+            response = pop_message_from_topic(topic_name)
+            return mom_pb2.TopicResponse(result=response)
+        elif request.op == Ops.LIST.value:
+            response = list_topics()
+            return mom_pb2.TopicResponse(result=response)
         else:
             pass
 

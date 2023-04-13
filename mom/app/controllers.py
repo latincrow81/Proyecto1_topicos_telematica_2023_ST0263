@@ -55,7 +55,7 @@ def push_message_to_queue(queue_name, payload):
 def push_message_to_topic(topic_name, payload):
     try:
         temp_list = ShareableList(name=topic_name)
-        temp_list[j] = json.dumps(payload)
+        temp_list[0] = json.dumps(payload)
         return temp_list
     except FileNotFoundError:
         return f"Topico no encontrada: {topic_name}"

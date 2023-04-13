@@ -33,7 +33,7 @@ def get_message_topic(message) -> str:
         stub = mom_pb2_grpc.MessageQueueStub(channel)
         response = stub.PullTopic(message)
 
-    return response.payload
+    return response.result
 
 
 def send_message_topic(message) -> str:
@@ -41,4 +41,4 @@ def send_message_topic(message) -> str:
         stub = mom_pb2_grpc.MessageQueueStub(channel)
         response = stub.PushTopic(message)
 
-    return response.payload
+    return response.result

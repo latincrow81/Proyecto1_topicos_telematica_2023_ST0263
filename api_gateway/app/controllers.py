@@ -36,7 +36,7 @@ def delete_queue(queue_name: str) -> Response:
     return Response(status=200, response=f"Cola {queue_name} eliminada correctamente, {grpc_response}")
 
 
-# (POP) Lee el ultimo mensaje de la cola
+# (POP) Lee el último mensaje de la cola
 def read_from_queue(queue_name: str) -> Response:
     queue_message = mom_pb2.QueueRequest(queue_name=queue_name, op='get')
     grpc_response = get_message(queue_message)
@@ -44,36 +44,41 @@ def read_from_queue(queue_name: str) -> Response:
     return Response(status=200, response=f"{grpc_response}")
 
 
+# lista los tópicos disponibles
 def list_topics() -> Response:
     message = mom_pb2.TopicRequest(topic_name='', op='list', payload='')
     grpc_response = get_message_topic(message)
     return Response(status=200, response=grpc_response)
 
 
-def create_topic(queue_name: str) -> Response:
-    message = mom_pb2.TopicRequest(queue_name=queue_name, op='create', payload='')
+# crea un nuevo tópico en memoria y lo guarda en la lista de tópicos
+def create_topic(topic_name: str) -> Response:
+    message = mom_pb2.TopicRequest(topic_name=topic_name, op='create', payload='')
     grpc_response = send_message_topic(message)
-    return Response(status=200, response=f"Cola creada como {queue_name}, {grpc_response}")
+    return Response(status=200, response=f"Topico creado como {topic_name}, {grpc_response}")
 
 
-def post_to_topic(queue_name: str) -> Response:
+# envía mensaje a tópico
+def post_to_topic(topic_name: str) -> Response:
     request_data = request.json
     payload = request_data.get('data')
-    queue_message = mom_pb2.TopicRequest(queue_name=queue_name, op='post', payload=payload, type='Q')
+    queue_message = mom_pb2.TopicRequest(topic_name=topic_name, op='post', payload=payload)
     grpc_response = send_message_topic(queue_message)
 
-    return Response(status=200, response=f"Mensaje enviado a cola {queue_name}, {grpc_response}")
+    return Response(status=200, response=f"Mensaje publicado en topico {topic_name}, {grpc_response}")
 
 
-def delete_topic(queue_name: str) -> Response:
-    queue_message = mom_pb2.TopicRequest(queue_name=queue_name, op='delete')
+# elimina tópico de la lista y lo remueve de memoria
+def delete_topic(topic_name: str) -> Response:
+    queue_message = mom_pb2.TopicRequest(topic_name=topic_name, op='delete')
     grpc_response = send_message_topic(queue_message)
 
-    return Response(status=200, response=f"Cola {queue_name} eliminada correctamente, {grpc_response}")
+    return Response(status=200, response=f"Topico {topic_name} eliminado correctamente, {grpc_response}")
 
 
-def read_from_topic(queue_name: str) -> Response:
-    queue_message = mom_pb2.TopicRequest(queue_name=queue_name, op='get')
+# lee el mensaje en el tópico
+def read_from_topic(topic_name: str) -> Response:
+    queue_message = mom_pb2.TopicRequest(topic_name=topic_name, op='get')
     grpc_response = get_message_topic(queue_message)
 
     return Response(status=200, response=f"{grpc_response}")
