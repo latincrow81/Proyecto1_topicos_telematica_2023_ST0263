@@ -131,6 +131,8 @@ El subdominio llama al api_gateway y se ejecuta en plano en una de la maquina vi
 
 ## opcionalmente - si quiere mostrar resultados o pantallazos 
 
+![Gateway](./assets/Gateway.png)
+
 # 5. otra información que considere relevante para esta actividad.
 
 # referencias:
