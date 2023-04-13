@@ -35,7 +35,7 @@ Diseñar e implementar un middleware orientado a mensajes (MOM) que permita a un
 Todos los requerimientos obligatorios al igual que algunos opcionales fueron implementados.
 
 # 2. Información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
-![Arquitectura](./assets/Arquitectura.png)
+![Arquitectura](assets/Arquitectura.jpeg)
 
 El cliente se conecta a través de Internet y realiza peticiones a una API. A su vez, la API se conecta al Flask (ApiGateway) para establecer la comunicación. La comunicación entre el Gateway y el MOM se realiza a través de gRPC. La implementación de colas y tópicos hacen parte del MOM, junto con su respectiva memoria compartida.
 
@@ -106,32 +106,37 @@ Ingresando al subdomino en el Browser.
 
 # 3.2. Detalles del desarrollo.
 
-
+Se utilizó grpc como comunicación entre el MOM y el api gateway. Se desarrolló utilizando el lenguaje de programación Python, y se modulo respectivamente. Se implementó base de datos y memoria compartida. 
 
 # 3.3. Detalles técnicos
 El subdominio llama al api_gateway y se ejecuta en plano en una de la maquina virtual de AWS y con la llave generada para el acceso se entrar a la maquina; para asi poder saber que hay dentro de ella.
 
-
 # 3.4. Descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
 
+Cada una de las variables del proyecto se encuentran en sus respectivos .env
 
 
 # 3.5. Detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
 
+No se anexa debido a que la estructura del proyecto es bastante amplia y no logra resumirse.
 
 # 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
 # IP o nombres de dominio en nube o en la máquina servidor.
 
+![Gateway](assets/GCP.jpeg)
+
 ## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
 
-## como se lanza el servidor.
+Cada una de las variables del proyecto se encuentran en sus respectivos .env
 
 ## una mini guia de como un usuario utilizaría el software o la aplicación
 
+Debe ingresar al subdominio en el Browser, allí encontrará una interfaz gráfica donde podrá enviar tanto peticiones GET como POST.
+
 ## opcionalmente - si quiere mostrar resultados o pantallazos 
 
-![Gateway](./assets/Gateway.png)
+![Gateway](assets/Gateway.jpeg)
 
 # 5. otra información que considere relevante para esta actividad.
 
